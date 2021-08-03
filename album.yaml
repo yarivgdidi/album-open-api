@@ -16,6 +16,7 @@ servers:
 paths:
   /album:
     get:
+      summary: List albums
       description: List all albums with user access
       operationId: listAlbums
       parameters:
@@ -35,7 +36,7 @@ paths:
             format: int32
       responses:
         '200':
-          description: A paged array of pets
+          description: A paged array of albums
           headers:
             x-next:
               description: A link to the next page of responses
@@ -56,6 +57,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      summary: Create album
       description: Creates a new Album in the store
       operationId: addAlbum
       requestBody:
@@ -79,6 +81,7 @@ paths:
           description: Invalid input
   /album/{id}:
     get:
+      summary: Get album by ID
       description: Returns an album based on a single ID,
       operationId: findAlbumById
       parameters:
@@ -110,8 +113,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
-      summary: Updates a album in the store with form data
-      description: ''
+      summary: Update album
+      description: 'Updates album by ID '
       operationId: updatePetWithForm
       parameters:
         - name: id
@@ -134,8 +137,73 @@ paths:
         '405':
           description: Invalid input
     delete:
+      summary: Delete an album
       description: deletes a single album based on the ID supplied
       operationId: deleteAlbum
+      parameters:
+        - name: id
+          in: path
+          description: ID of pet to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: pet deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /favorite:
+    get:
+      description: List all favorites relations 
+      operationId: listFavorites
+      responses:
+        '200':
+          description: An array of favorites relations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Favorite"
+        '204':
+          description: No Content
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Creates a new Album in the store
+      operationId: addFavorite
+      requestBody:
+        description: Add Favorite album
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewFavorite'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+        '405':
+          description: Invalid input
+  /favorite/{id}:
+    delete:
+      description: deletes a favorite based on the ID supplied
+      operationId: deleteFavorite
       parameters:
         - name: id
           in: path
@@ -170,7 +238,7 @@ components:
       required:
         - userId
         - title
-        - _id
+        - _id      
       properties:
         userId:
           type: integer
@@ -178,6 +246,27 @@ components:
         title:
           type: string
         _id:
+          type: string
+    Favorite:
+      allOf:
+        - $ref: '#/components/schemas/NewFavorite'
+        - type: object
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              format: int64
+    NewFavorite:
+      type: object
+      required:
+        - userId
+        - albumId
+      properties:
+        userId:
+          type: integer
+          format: int64
+        albumId:
           type: string
     Error:
       type: object

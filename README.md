@@ -16,3 +16,7 @@ then:
 - npm i
 - npm start
 - start server implementation
+
+go to http://localhost:3000/api-docs for openapi (swagger) docs
+
+

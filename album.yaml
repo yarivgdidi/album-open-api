@@ -128,7 +128,7 @@ paths:
         - album
       summary: Update album
       description: 'Updates album by ID '
-      operationId: updatePetWithForm
+      operationId: updateAlbum
       parameters:
         - name: id
           in: path
@@ -166,6 +166,50 @@ paths:
       responses:
         '204':
           description: pet deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /album/favorites:
+    get:
+      tags: 
+        - album
+      summary: List favorites albums
+      description: List all albums with user access
+      operationId: listFavoritesAlbums
+      parameters:
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: offset from beginning of list (for pagination)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of albums
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+        '204':
+          description: No Content
         default:
           description: unexpected error
           content:

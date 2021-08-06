@@ -254,6 +254,9 @@ components:
             id:
               type: integer
               format: int64
+            favorite: 
+              type: object
+              $ref: '#/components/schemas/Favorite'
     NewAlbum:
       type: object
       required:

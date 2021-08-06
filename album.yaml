@@ -1,4 +1,4 @@
-openapi: "3.0.2"
+openapi: 3.0.2
 info:
   version: 1.0.0
   title: Open Api album example
@@ -13,9 +13,16 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: http://localhost:3000/api
+tags:
+  - name: album
+    description: Album
+  - name: favorite
+    description: Operations about favorite album
 paths:
   /album:
     get:
+      tags: 
+        - album
       summary: List albums
       description: List all albums with user access
       operationId: listAlbums
@@ -57,6 +64,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      tags: 
+        - album
       summary: Create album
       description: Creates a new Album in the store
       operationId: addAlbum
@@ -81,6 +90,8 @@ paths:
           description: Invalid input
   /album/{id}:
     get:
+      tags: 
+        - album
       summary: Get album by ID
       description: Returns an album based on a single ID,
       operationId: findAlbumById
@@ -113,6 +124,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     put:
+      tags: 
+        - album
       summary: Update album
       description: 'Updates album by ID '
       operationId: updatePetWithForm
@@ -137,6 +150,8 @@ paths:
         '405':
           description: Invalid input
     delete:
+      tags: 
+        - album
       summary: Delete an album
       description: deletes a single album based on the ID supplied
       operationId: deleteAlbum
@@ -159,6 +174,8 @@ paths:
                 $ref: '#/components/schemas/Error'
   /favorite:
     get:
+      tags: 
+        - favorite
       description: List all favorites relations 
       operationId: listFavorites
       responses:
@@ -179,6 +196,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      tags: 
+        - favorite
       description: Creates a new Album in the store
       operationId: addFavorite
       requestBody:
@@ -202,6 +221,8 @@ paths:
           description: Invalid input
   /favorite/{id}:
     delete:
+      tags: 
+        - favorite
       description: deletes a favorite based on the ID supplied
       operationId: deleteFavorite
       parameters:

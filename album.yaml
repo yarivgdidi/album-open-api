@@ -292,11 +292,9 @@ components:
           - _id
           properties:
             _id:
-              type: integer
-              format: string
+              type: string
             favorite: 
-              type: object
-              $ref: '#/components/schemas/Favorite'
+              type: string
     NewAlbum:
       type: object
       required:

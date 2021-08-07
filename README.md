@@ -19,4 +19,8 @@ then:
 
 go to http://localhost:3000/api-docs for openapi (swagger) docs
 
+### generate album-api-client
+```
+npx @openapitools/openapi-generator-cli generate -i album.yaml -g typescript-axios -o ../album-app/src/openApiClient --skip-validate-spec --additional-properties packageName=AlbumClient
+```
 
